@@ -22,7 +22,7 @@ public:
 	bool SetTrueOrFalse(std::string& );
 	void UpdateFacts();
 	void GetNewFacts();
-	std::unordered_map<std::string, std::string> derivableFacts; // ключ-выводимый факт, значение-вывод 
+	std::unordered_map<std::string, std::string> derivableFacts; // ГЄГ«ГѕГ·-ГўГ»ГўГ®Г¤ГЁГ¬Г»Г© ГґГ ГЄГІ, Г§Г­Г Г·ГҐГ­ГЁГҐ-ГўГ»ГўГ®Г¤ 
 	std::unordered_set<std::string> knownFacts;
 	std::unordered_set<std::string> newknownFacts;
 	std::unordered_set<std::string> unknownFacts;
