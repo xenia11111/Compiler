@@ -90,8 +90,8 @@ void Compiler::InsertRule(std::string &rule) {
 	InsertRule(name, derivation);
 }
 
-bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // передаём в функцию правило вывода, вычисляем значение выражения
-														// вычисление производится динамически с помощью двух стеков - с операциями и значениями фактов
+bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // ГЇГҐГ°ГҐГ¤Г ВёГ¬ Гў ГґГіГ­ГЄГ¶ГЁГѕ ГЇГ°Г ГўГЁГ«Г® ГўГ»ГўГ®Г¤Г , ГўГ»Г·ГЁГ±Г«ГїГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГҐ ГўГ»Г°Г Г¦ГҐГ­ГЁГї
+														// ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ ГЇГ°Г®ГЁГ§ГўГ®Г¤ГЁГІГ±Гї Г¤ГЁГ­Г Г¬ГЁГ·ГҐГ±ГЄГЁ Г± ГЇГ®Г¬Г®Г№ГјГѕ Г¤ГўГіГµ Г±ГІГҐГЄГ®Гў - Г± Г®ГЇГҐГ°Г Г¶ГЁГїГ¬ГЁ ГЁ Г§Г­Г Г·ГҐГ­ГЁГїГ¬ГЁ ГґГ ГЄГІГ®Гў
 	std::string derivation = rule.second;
 	std::string derivFact = rule.first;
 
@@ -100,7 +100,7 @@ bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // пе
 	std::string fact;
 	bool res;
 	for (int i = 0; i <= derivation.size(); i++) {
-		if (fact != "" && (derivation[i] == '|' || derivation[i] == ',' || i == derivation.size())) //после того,как прочитали факт, вычисляем его значение
+		if (fact != "" && (derivation[i] == '|' || derivation[i] == ',' || i == derivation.size())) //ГЇГ®Г±Г«ГҐ ГІГ®ГЈГ®,ГЄГ ГЄ ГЇГ°Г®Г·ГЁГІГ Г«ГЁ ГґГ ГЄГІ, ГўГ»Г·ГЁГ±Г«ГїГҐГ¬ ГҐГЈГ® Г§Г­Г Г·ГҐГ­ГЁГҐ
 		{
 			bool value;                 
 			value = SetTrueOrFalse(fact);
@@ -110,15 +110,15 @@ bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // пе
 		}
 		if (derivation[i] == '|' || derivation[i] == ',') {
 			char operation = derivation[i];
-			if (operation == '|') {                           // у операции "|" приоритет выше, чем у "," , пока стек не пустой операция "выталкивает"
-				while (!operations.empty()) {          // операцию приоритета ниже или равного, из стека с фактами достаем соответсвующие операции факты
+			if (operation == '|') {                           // Гі Г®ГЇГҐГ°Г Г¶ГЁГЁ "|" ГЇГ°ГЁГ®Г°ГЁГІГҐГІ ГўГ»ГёГҐ, Г·ГҐГ¬ Гі "," , ГЇГ®ГЄГ  Г±ГІГҐГЄ Г­ГҐ ГЇГіГ±ГІГ®Г© Г®ГЇГҐГ°Г Г¶ГЁГї "ГўГ»ГІГ Г«ГЄГЁГўГ ГҐГІ"
+				while (!operations.empty()) {          // Г®ГЇГҐГ°Г Г¶ГЁГѕ ГЇГ°ГЁГ®Г°ГЁГІГҐГІГ  Г­ГЁГ¦ГҐ ГЁГ«ГЁ Г°Г ГўГ­Г®ГЈГ®, ГЁГ§ Г±ГІГҐГЄГ  Г± ГґГ ГЄГІГ Г¬ГЁ Г¤Г®Г±ГІГ ГҐГ¬ Г±Г®Г®ГІГўГҐГІГ±ГўГіГѕГ№ГЁГҐ Г®ГЇГҐГ°Г Г¶ГЁГЁ ГґГ ГЄГІГ»
 					char currentOperation = operations.top();
 					operations.pop();
 					bool value1 = facts.top();
 					facts.pop();
 					bool value2 = facts.top();
 					facts.pop();
-					if (currentOperation == '|') {   // результат применения операции кладём обратно в стек фактов
+					if (currentOperation == '|') {   // Г°ГҐГ§ГіГ«ГјГІГ ГІ ГЇГ°ГЁГ¬ГҐГ­ГҐГ­ГЁГї Г®ГЇГҐГ°Г Г¶ГЁГЁ ГЄГ«Г Г¤ВёГ¬ Г®ГЎГ°Г ГІГ­Г® Гў Г±ГІГҐГЄ ГґГ ГЄГІГ®Гў
 						res = value1 + value2;
 						facts.push(res);
 					}
@@ -140,7 +140,7 @@ bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // пе
 
 	}
 
-	if (operations.empty()) {        // если после окончания цикла стек операций пустой, то результат вычисления выражения находится в стеке фактов
+	if (operations.empty()) {        // ГҐГ±Г«ГЁ ГЇГ®Г±Г«ГҐ Г®ГЄГ®Г­Г·Г Г­ГЁГї Г¶ГЁГЄГ«Г  Г±ГІГҐГЄ Г®ГЇГҐГ°Г Г¶ГЁГ© ГЇГіГ±ГІГ®Г©, ГІГ® Г°ГҐГ§ГіГ«ГјГІГ ГІ ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГї ГўГ»Г°Г Г¦ГҐГ­ГЁГї Г­Г ГµГ®Г¤ГЁГІГ±Гї Гў Г±ГІГҐГЄГҐ ГґГ ГЄГІГ®Гў
 		bool value = facts.top();
 
 		facts.pop();
@@ -156,7 +156,7 @@ bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // пе
 		if (res == false) { unknownFacts.insert(derivFact); }
 
 	}
-	else {                                // если же не пустой, то достаем оставшиеся операции и соответсвующие им факты и вычисляем значение выражения
+	else {                                // ГҐГ±Г«ГЁ Г¦ГҐ Г­ГҐ ГЇГіГ±ГІГ®Г©, ГІГ® Г¤Г®Г±ГІГ ГҐГ¬ Г®Г±ГІГ ГўГёГЁГҐГ±Гї Г®ГЇГҐГ°Г Г¶ГЁГЁ ГЁ Г±Г®Г®ГІГўГҐГІГ±ГўГіГѕГ№ГЁГҐ ГЁГ¬ ГґГ ГЄГІГ» ГЁ ГўГ»Г·ГЁГ±Г«ГїГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГҐ ГўГ»Г°Г Г¦ГҐГ­ГЁГї
 		while (!operations.empty()) {
 			char currentOperation = operations.top();
 			operations.pop();
@@ -198,25 +198,25 @@ bool Compiler::Compile(const std::pair<std::string, std::string>& rule) {  // пе
 
 
 
-bool Compiler::SetTrueOrFalse(std::string& token) { // проверка истинности факта
+bool Compiler::SetTrueOrFalse(std::string& token) { // ГЇГ°Г®ГўГҐГ°ГЄГ  ГЁГ±ГІГЁГ­Г­Г®Г±ГІГЁ ГґГ ГЄГІГ 
 	auto it1 = knownFacts.find(token);
 	auto it2 = newknownFacts.find(token);
-	if (it1 != knownFacts.end() || it2 != newknownFacts.end())   //если факт известный или стал известным в ходе вывода, возвращаем true
+	if (it1 != knownFacts.end() || it2 != newknownFacts.end())   //ГҐГ±Г«ГЁ ГґГ ГЄГІ ГЁГ§ГўГҐГ±ГІГ­Г»Г© ГЁГ«ГЁ Г±ГІГ Г« ГЁГ§ГўГҐГ±ГІГ­Г»Г¬ Гў ГµГ®Г¤ГҐ ГўГ»ГўГ®Г¤Г , ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ true
 	{
 		return true;
 	}
 
 	auto it3 = unknownFacts.find(token);
-	if (it3 != unknownFacts.end()) {   //если факт вычислен, как неизвестный-возвращаем false
+	if (it3 != unknownFacts.end()) {   //ГҐГ±Г«ГЁ ГґГ ГЄГІ ГўГ»Г·ГЁГ±Г«ГҐГ­, ГЄГ ГЄ Г­ГҐГЁГ§ГўГҐГ±ГІГ­Г»Г©-ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ false
 		return false;
 	}
 	auto it4 = undefinedFacts.find(token);
-	if (it4 != undefinedFacts.end()) { //если он уже находится в undefinedFacts, значит произошло зацикливание, временно присваиваем ему значение false и помещаем в undefined
+	if (it4 != undefinedFacts.end()) { //ГҐГ±Г«ГЁ Г®Г­ ГіГ¦ГҐ Г­Г ГµГ®Г¤ГЁГІГ±Гї Гў undefinedFacts, Г§Г­Г Г·ГЁГІ ГЇГ°Г®ГЁГ§Г®ГёГ«Г® Г§Г Г¶ГЁГЄГ«ГЁГўГ Г­ГЁГҐ, ГўГ°ГҐГ¬ГҐГ­Г­Г® ГЇГ°ГЁГ±ГўГ ГЁГўГ ГҐГ¬ ГҐГ¬Гі Г§Г­Г Г·ГҐГ­ГЁГҐ false ГЁ ГЇГ®Г¬ГҐГ№Г ГҐГ¬ Гў undefined
 
 		return false;
 
 	}
-	else if (derivableFacts.find(token) != derivableFacts.end()) { //иначе, если факт выводится, вычислем значение вывода
+	else if (derivableFacts.find(token) != derivableFacts.end()) { //ГЁГ­Г Г·ГҐ, ГҐГ±Г«ГЁ ГґГ ГЄГІ ГўГ»ГўГ®Г¤ГЁГІГ±Гї, ГўГ»Г·ГЁГ±Г«ГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГҐ ГўГ»ГўГ®Г¤Г 
 		undefinedFacts.insert(token);
 		auto it = derivableFacts.find(token);
 		bool res = Compile(*it);
@@ -226,7 +226,7 @@ bool Compiler::SetTrueOrFalse(std::string& token) { // проверка истинности факта
 	}
 	else { return false; }
 }
-void Compiler::UpdateFacts() {  //этой функцией проверяемне появилось ли решение для неопределенных фактов
+void Compiler::UpdateFacts() {  //ГЅГІГ®Г© ГґГіГ­ГЄГ¶ГЁГҐГ© ГЇГ°Г®ГўГҐГ°ГїГҐГ¬Г­ГҐ ГЇГ®ГїГўГЁГ«Г®Г±Гј Г«ГЁ Г°ГҐГёГҐГ­ГЁГҐ Г¤Г«Гї Г­ГҐГ®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­Г­Г»Гµ ГґГ ГЄГІГ®Гў
 	for (std::string it : undefinedFacts) {
 		auto it2 = derivableFacts.find(it);
 		Compile(*it2);
